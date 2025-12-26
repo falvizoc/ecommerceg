@@ -1,0 +1,43 @@
+name: PR Validation
+
+on:
+  pull_request:
+    types: [opened, edited, synchronize]
+
+jobs:
+  check-milestone:
+    name: Check Milestone Assignment
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check if PR has milestone
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const pr = context.payload.pull_request;
+
+            if (!pr.milestone) {
+              core.setFailed('Este PR no tiene un milestone asignado. Por favor asigna un milestone antes de hacer merge.');
+              return;
+            }
+
+            console.log(`PR asignado al milestone: ${pr.milestone.title}`);
+
+  check-labels:
+    name: Check Required Labels
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check labels
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const pr = context.payload.pull_request;
+            const labels = pr.labels.map(l => l.name);
+
+            const typeLabels = labels.filter(l => l.startsWith('type:'));
+
+            if (typeLabels.length === 0) {
+              core.setFailed('Este PR necesita al menos un label de tipo (type: feature, type: bug, etc.)');
+              return;
+            }
+
+            console.log(`Labels encontrados: ${labels.join(', ')}`);

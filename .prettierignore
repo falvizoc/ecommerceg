@@ -1,0 +1,33 @@
+# Dependencies
+node_modules/
+.pnpm-store/
+
+# Build outputs
+.next/
+out/
+build/
+dist/
+
+# Cache
+.cache/
+
+# Generated files
+*.lock
+package-lock.json
+
+# Coverage
+coverage/
+
+# Misc
+.DS_Store
+*.pem
+
+# Docker
+Dockerfile*
+
+# IDE
+.idea/
+.vscode/
+
+# Documentation (markdown files)
+*.md
