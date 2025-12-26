@@ -12,6 +12,8 @@ Documentar necesidades, funcionalidades o requisitos descubiertos durante el des
 | ID | Fecha | Título | Impacto | Milestone | Estado |
 |----|-------|--------|---------|-----------|--------|
 | H-001 | 2025-12-26 | Sistema de Márgenes | Alto | 1.1, 1.7 | Documentado |
+| H-002 | 2025-12-26 | Sistema de Precios SYSCOM | Alto | 1.1 | Documentado |
+| H-003 | 2025-12-26 | IA para Análisis de Precios | Medio | Fase 2+ | Evaluado |
 
 ---
 
@@ -85,6 +87,127 @@ enum MarginType {
   FIXED_PRICE     // Precio fijo ignorando costo
   DISABLED        // No mostrar producto
 }
+```
+
+---
+
+## H-002: Sistema de Precios SYSCOM
+
+### Fecha: 2025-12-26
+### Descubierto durante: Clarificación de requisitos
+### Reportado por: Usuario
+
+### Descripción
+La API de SYSCOM proporciona múltiples campos de precio que deben entenderse correctamente:
+- `precio_especial`: Precio distribuidor (nuestro costo real)
+- `precio_lista`: Precio sugerido al público (MSRP)
+- `descuento`: Porcentaje de descuento sobre lista
+- `tipo_cambio`: Tipo de cambio USD/MXN
+
+### Impacto
+- **Alto**: Afecta el cálculo de precios y márgenes
+
+### Análisis
+- ¿Es necesario para el MVP? **SÍ**
+- ¿Afecta milestones existentes? **SÍ** (1.1 SYSCOM)
+- ¿Requiere cambio de arquitectura? **No** (solo ajuste en modelo de datos)
+
+### Decisión
+- [x] Documentar en `/docs/requirements/business-model.md`
+- [x] Actualizar CLAUDE.md con información de precios SYSCOM
+
+### Acciones Completadas
+- [x] Investigar documentación SYSCOM
+- [x] Documentar estructura de precios
+- [x] Actualizar modelo de negocio
+- [ ] Implementar tipos TypeScript para precios SYSCOM (Milestone 1.1)
+
+### Referencias
+- [SYSCOM Dev](https://developers.syscom.mx/)
+- [Postman SYSCOM API](https://www.postman.com/syscom-dev/public/documentation/usqon6h/syscom-api)
+
+---
+
+## H-003: IA para Análisis de Precios de Mercado
+
+### Fecha: 2025-12-26
+### Descubierto durante: Clarificación de requisitos
+### Reportado por: Usuario
+
+### Descripción
+Solicitud para implementar una IA que:
+1. Busque precios de mercado en la web
+2. Verifique existencias en competidores
+3. Sugiera precios óptimos
+
+### Impacto
+- **Medio**: Feature de valor agregado, no crítico para MVP
+
+### Análisis de Viabilidad
+
+#### ✅ Técnicamente Factible
+| Componente | Tecnología | Complejidad |
+|------------|------------|-------------|
+| Web Scraping | Puppeteer/Playwright | Media-Alta |
+| Procesamiento NLP | OpenAI API / Claude API | Media |
+| Análisis de precios | Algoritmos ML simples | Media |
+| Base de datos precios | PostgreSQL + cache | Baja |
+
+#### ⚠️ Consideraciones Legales
+- **Terms of Service**: Muchos sitios prohiben scraping
+- **Robots.txt**: Debe respetarse
+- **Rate limiting**: No sobrecargar sitios terceros
+- **Datos personales**: No aplicable (solo precios públicos)
+
+#### ⚠️ Consideraciones Técnicas
+- **Mantenimiento alto**: Los scrapers requieren ajustes frecuentes
+- **Cambios en sitios**: Las páginas cambian su estructura
+- **Bloqueos**: Sitios pueden bloquear IPs
+- **Calidad de datos**: Variabilidad en formatos de precio
+
+#### 💰 Alternativas Recomendadas
+
+1. **APIs de Comparación de Precios** (Fase 2)
+   - Usar servicios existentes como Price2Spy, Prisync
+   - Menor mantenimiento, datos más confiables
+   - Costo: $50-500/mes según volumen
+
+2. **Análisis Manual Asistido** (MVP)
+   - Dashboard para comparar precio SYSCOM vs precio_lista
+   - Alertas cuando margen es muy bajo o muy alto
+   - Sin dependencias externas
+
+3. **IA Generativa para Sugerencias** (Fase 3)
+   - Usar Claude/GPT para analizar tendencias
+   - Input: historial de ventas, precios SYSCOM
+   - Output: sugerencias de pricing
+
+### Decisión
+- [ ] ~~Agregar al MVP~~ (No viable para MVP)
+- [x] Documentar para Fase 2+
+- [x] Implementar alternativa simple en MVP (alertas de margen)
+
+### Plan Propuesto
+
+#### MVP (Fase 1)
+```
+- Alerta: "Margen < 10%" → Revisar pricing
+- Alerta: "Precio > 150% del mercado" → Posible pérdida de venta
+- Dashboard: Top productos con margen bajo/alto
+```
+
+#### Fase 2
+```
+- Evaluar servicios de comparación de precios
+- Integrar API de comparador seleccionado
+- Dashboard de competitividad
+```
+
+#### Fase 3+
+```
+- IA para análisis predictivo
+- Sugerencias automáticas de pricing
+- A/B testing de precios
 ```
 
 ---

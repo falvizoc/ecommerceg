@@ -44,25 +44,57 @@ Cada tienda se enfoca en categorías específicas de SYSCOM:
 - Radiocomunicación
 - Networking
 
-### Sistema de Márgenes (CRÍTICO)
+### Sistema de Precios SYSCOM (CRÍTICO)
 Ver `/docs/requirements/business-model.md`
 
+```
+SYSCOM proporciona:
+- precio_especial: Costo distribuidor (base para margen)
+- precio_lista: Precio sugerido al público (MSRP)
+- descuento: % de descuento sobre lista
+- tipo_cambio: TC USD/MXN del día
+```
+
+### Sistema de Márgenes (CRÍTICO)
 ```
 Prioridad: Producto > Categoría > General
 
 Tipos de margen:
-- Porcentaje sobre costo (+25%)
-- Monto fijo (+$150)
-- Precio fijo ($1,500)
-- Ocultar producto
+- Porcentaje sobre costo (+25% sobre precio_especial)
+- Monto fijo (+$150 sobre precio_especial)
+- Precio fijo ($1,500 ignorando costo)
+- Descuento sobre lista (-10% sobre precio_lista)
+- Ocultar producto (disabled)
 ```
+
+## Entorno de Desarrollo
+
+> **IMPORTANTE**: Este proyecto se desarrolla en **WSL Ubuntu** sobre Windows.
+> Todos los comandos de consola deben ser compatibles con Linux/bash.
+
+| Aspecto | Detalle |
+|---------|---------|
+| Sistema | WSL Ubuntu (Windows Subsystem for Linux) |
+| Shell | Bash |
+| Node.js | v20.x |
+| Package Manager | npm (pnpm no disponible globalmente) |
+
+### Puertos Reservados
+| Puerto | Uso |
+|--------|-----|
+| 3000 | Ocupado (otro proyecto frontend) |
+| 5000 | Ocupado (otro proyecto backend) |
+| **3001** | **Este proyecto (Next.js)** |
+| 5432 | PostgreSQL |
+| 6379 | Redis |
+| 7700 | Meilisearch |
 
 ## Stack Tecnológico (DEFINIDO)
 
 ### Core
 | Componente | Tecnología |
 |------------|------------|
-| Framework | Next.js 14 (App Router) |
+| Framework | Next.js 16 (App Router) |
 | Lenguaje | TypeScript 5.x |
 | ORM | Prisma 5.x |
 | Base de datos | PostgreSQL 16 |
@@ -143,20 +175,31 @@ eCommerce-G/
 
 ## Comandos Frecuentes
 ```bash
-# Desarrollo
-pnpm dev                    # Iniciar servidor desarrollo
-pnpm build                  # Build producción
-pnpm lint                   # Linting
-pnpm test                   # Ejecutar tests
+# Desarrollo (puerto 3001)
+npm run dev                 # Iniciar servidor desarrollo
+npm run dev:turbo           # Desarrollo con Turbopack (más rápido)
+npm run build               # Build producción
+npm run start               # Servidor producción
+
+# Calidad de código
+npm run lint                # ESLint
+npm run lint:fix            # ESLint con auto-fix
+npm run format              # Prettier format
+npm run format:check        # Verificar formato
+npm run type-check          # Verificar tipos TypeScript
+npm run validate            # lint + type-check + build
 
 # Base de datos
-pnpm prisma generate        # Generar cliente Prisma
-pnpm prisma migrate dev     # Migración desarrollo
-pnpm prisma studio          # UI de base de datos
+npx prisma generate         # Generar cliente Prisma
+npx prisma migrate dev      # Migración desarrollo
+npx prisma studio           # UI de base de datos
 
 # Docker
 docker-compose up -d        # Iniciar servicios locales
 docker-compose down         # Detener servicios
+
+# Git
+git push origin main        # Push a GitHub
 ```
 
 ## Convenciones
@@ -213,7 +256,7 @@ Ver "Estado Actual del Proyecto" más abajo
 
 # ESTADO ACTUAL DEL PROYECTO
 
-## Fase Actual: PLANIFICACIÓN → EJECUCIÓN
+## Fase Actual: EJECUCIÓN - Fase 0
 
 ## Milestones Completados
 - [x] Estructura documental
@@ -222,25 +265,30 @@ Ver "Estado Actual del Proyecto" más abajo
 - [x] Arquitectura diseñada
 - [x] Plan de milestones creado
 - [x] GitHub templates creados
+- [x] **Milestone 0.1: Scaffolding del Proyecto** ✅
 
 ## Milestone Actual
-**0.1: Scaffolding del Proyecto** - PENDIENTE
+**0.2: Design System y UI Base** - PENDIENTE
 
 ## Próximos Pasos
-1. Ejecutar Milestone 0.1 (Scaffolding)
-2. Ejecutar Milestone 0.2 (Design System)
-3. Ejecutar Milestone 0.3 (Base de Datos)
+1. Ejecutar Milestone 0.2 (Design System - Shadcn/ui)
+2. Ejecutar Milestone 0.3 (Base de Datos - Prisma)
+3. Ejecutar Milestone 0.4 (Autenticación - NextAuth)
+
+## Repositorio
+- **GitHub**: git@github.com:falvizoc/ecommerceg.git
+- **Branch principal**: main
 
 ## Decisiones Pendientes
-- Ninguna
+- IA para análisis de precios de mercado (evaluar viabilidad)
 
 ## Hallazgos Pendientes
 - Ver `/docs/tracking/discoveries.md`
 
 ## Última Actualización
 - **Fecha**: 2025-12-26
-- **Sesión**: Planificación inicial completada
-- **Próxima acción**: Iniciar Milestone 0.1
+- **Sesión**: Milestone 0.1 completado, repositorio en GitHub
+- **Próxima acción**: Iniciar Milestone 0.2 (Shadcn/ui)
 
 ---
 

@@ -30,11 +30,67 @@
 ### Proceso de Venta
 
 1. **Catálogo**: Productos sincronizados desde SYSCOM
-2. **Precio**: Precio SYSCOM + margen configurado
+2. **Precio**: Precio calculado según estrategia configurada (ver Sistema de Precios)
 3. **Compra**: Cliente paga en la tienda
 4. **Orden**: Sistema crea orden en SYSCOM
 5. **Envío**: SYSCOM envía directo al cliente (dropshipping)
 6. **Factura**: La tienda factura al cliente (CFDI con razón social de la tienda)
+
+---
+
+## Sistema de Precios SYSCOM
+
+### Estructura de Precios en API SYSCOM
+
+SYSCOM proporciona dos tipos de precio principales:
+
+| Campo API | Descripción | Uso |
+|-----------|-------------|-----|
+| `precio_especial` | **Precio Distribuidor** - Costo real de compra | Base para cálculo de margen |
+| `precio_lista` | **Precio Lista/MSRP** - Precio sugerido al público | Referencia para descuentos |
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│                    SYSCOM API Response                       │
+├─────────────────────────────────────────────────────────────┤
+│  precio_lista: $1,500 MXN    ← Precio sugerido (MSRP)       │
+│  precio_especial: $1,000 MXN ← Tu costo (Distribuidor)      │
+│  descuento: 33%              ← Descuento sobre lista        │
+│  tipo_cambio: 17.50          ← TC USD/MXN                   │
+└─────────────────────────────────────────────────────────────┘
+```
+
+### Estrategias de Pricing
+
+El sistema soporta dos estrategias principales:
+
+#### 1. Margen sobre Costo (Recomendado para B2B)
+```
+Precio Venta = precio_especial × (1 + margen%)
+
+Ejemplo:
+- Costo SYSCOM: $1,000
+- Margen: 25%
+- Precio Venta: $1,250
+- Utilidad: $250
+```
+
+#### 2. Descuento sobre Lista (Opcional para competitividad)
+```
+Precio Venta = precio_lista × (1 - descuento%)
+
+Ejemplo:
+- Precio Lista: $1,500
+- Descuento: 10%
+- Precio Venta: $1,350
+- Utilidad: $350 (vs costo $1,000)
+```
+
+### Consideraciones de Tipo de Cambio
+
+- SYSCOM puede manejar precios en USD
+- La API incluye el tipo de cambio del día
+- Se puede configurar tipo de cambio fijo o dinámico por tenant
 
 ---
 
