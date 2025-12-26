@@ -25,6 +25,13 @@ y este proyecto adhiere a [Versionado Semántico](https://semver.org/lang/es/).
   - Páginas base (layout, error, not-found, loading)
   - Utilidades base (cn, formatCurrency, formatDate)
   - Tipos TypeScript base
+- **Milestone 0.2: Design System y UI Base**
+  - Shadcn/ui inicializado con estilo new-york
+  - 22 componentes UI instalados (button, card, dialog, form, table, etc.)
+  - Tailwind CSS 4 con CSS variables para temas
+  - Landing page responsive demostrando componentes
+  - Toaster (sonner) para notificaciones
+  - Lucide React para iconografía
 
 ### Changed
 - N/A

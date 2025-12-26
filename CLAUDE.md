@@ -266,14 +266,15 @@ Ver "Estado Actual del Proyecto" más abajo
 - [x] Plan de milestones creado
 - [x] GitHub templates creados
 - [x] **Milestone 0.1: Scaffolding del Proyecto** ✅
+- [x] **Milestone 0.2: Design System y UI Base** ✅
 
 ## Milestone Actual
-**0.2: Design System y UI Base** - PENDIENTE
+**0.3: Base de Datos y Prisma** - PENDIENTE
 
 ## Próximos Pasos
-1. Ejecutar Milestone 0.2 (Design System - Shadcn/ui)
-2. Ejecutar Milestone 0.3 (Base de Datos - Prisma)
-3. Ejecutar Milestone 0.4 (Autenticación - NextAuth)
+1. Ejecutar Milestone 0.3 (Base de Datos - Prisma)
+2. Ejecutar Milestone 0.4 (Autenticación - NextAuth)
+3. Ejecutar Milestone 0.5 (Multi-Tenancy)
 
 ## Repositorio
 - **GitHub**: git@github.com:falvizoc/ecommerceg.git
@@ -287,8 +288,8 @@ Ver "Estado Actual del Proyecto" más abajo
 
 ## Última Actualización
 - **Fecha**: 2025-12-26
-- **Sesión**: Milestone 0.1 completado, repositorio en GitHub
-- **Próxima acción**: Iniciar Milestone 0.2 (Shadcn/ui)
+- **Sesión**: Milestone 0.2 completado (Design System)
+- **Próxima acción**: Iniciar Milestone 0.3 (Prisma + PostgreSQL)
 
 ---
 
