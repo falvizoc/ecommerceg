@@ -1,36 +1,33 @@
-import { ShoppingCart, Store, Package, CreditCard, FileText, Settings } from 'lucide-react';
+import {
+  ShoppingCart,
+  Store,
+  Package,
+  CreditCard,
+  FileText,
+  Settings,
+} from "lucide-react";
 
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Separator } from '@/components/ui/separator';
+import { Header } from "@/components/shared/header";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Separator } from "@/components/ui/separator";
 
 export default function Home() {
   return (
     <div className="min-h-screen bg-background">
-      {/* Header */}
-      <header className="border-b">
-        <div className="container mx-auto flex h-16 items-center justify-between px-4">
-          <div className="flex items-center gap-2">
-            <Store className="h-6 w-6" />
-            <span className="text-xl font-bold">eCommerce-G</span>
-          </div>
-          <nav className="flex items-center gap-4">
-            <Button variant="ghost" size="sm">
-              Documentación
-            </Button>
-            <Button variant="ghost" size="sm">
-              GitHub
-            </Button>
-            <Button size="sm">Iniciar Sesión</Button>
-          </nav>
-        </div>
-      </header>
+      <Header />
 
       {/* Hero Section */}
       <section className="container mx-auto px-4 py-16 text-center">
         <Badge variant="secondary" className="mb-4">
-          Milestone 0.2 Completado
+          Milestone 0.4 - Autenticación
         </Badge>
         <h1 className="text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl">
           Plataforma Multi-Tenant
@@ -38,8 +35,8 @@ export default function Home() {
           <span className="text-muted-foreground">de Comercio Electrónico</span>
         </h1>
         <p className="mx-auto mt-6 max-w-2xl text-lg text-muted-foreground">
-          Despliega múltiples tiendas especializadas con integración SYSCOM, facturación CFDI y
-          pasarelas de pago mexicanas.
+          Despliega múltiples tiendas especializadas con integración SYSCOM,
+          facturación CFDI y pasarelas de pago mexicanas.
         </p>
         <div className="mt-8 flex justify-center gap-4">
           <Button size="lg">
@@ -56,7 +53,9 @@ export default function Home() {
 
       {/* Features Grid */}
       <section className="container mx-auto px-4 py-16">
-        <h2 className="mb-8 text-center text-2xl font-bold">Características Principales</h2>
+        <h2 className="mb-8 text-center text-2xl font-bold">
+          Características Principales
+        </h2>
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           <Card>
             <CardHeader>
@@ -148,7 +147,9 @@ export default function Home() {
               <div className="mb-2 flex h-8 w-8 items-center justify-center rounded-full bg-muted text-muted-foreground">
                 ?
               </div>
-              <CardTitle className="text-muted-foreground">Próximamente</CardTitle>
+              <CardTitle className="text-muted-foreground">
+                Próximamente
+              </CardTitle>
               <CardDescription>Más funcionalidades en desarrollo</CardDescription>
             </CardHeader>
             <CardContent>
@@ -165,15 +166,18 @@ export default function Home() {
       {/* Tech Stack */}
       <section className="border-t bg-muted/50 py-16">
         <div className="container mx-auto px-4">
-          <h2 className="mb-8 text-center text-2xl font-bold">Stack Tecnológico</h2>
+          <h2 className="mb-8 text-center text-2xl font-bold">
+            Stack Tecnológico
+          </h2>
           <div className="flex flex-wrap justify-center gap-3">
             <Badge variant="outline">Next.js 16</Badge>
             <Badge variant="outline">TypeScript</Badge>
             <Badge variant="outline">Tailwind CSS 4</Badge>
             <Badge variant="outline">Shadcn/ui</Badge>
-            <Badge variant="outline">Prisma</Badge>
+            <Badge variant="outline">Prisma 7</Badge>
             <Badge variant="outline">PostgreSQL</Badge>
             <Badge variant="outline">Redis</Badge>
+            <Badge variant="outline">NextAuth.js v5</Badge>
             <Badge variant="outline">AWS</Badge>
           </div>
         </div>

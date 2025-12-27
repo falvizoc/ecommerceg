@@ -70,3 +70,5 @@ Thumbs.db
 infrastructure/**/*.tfvars
 infrastructure/**/*.tfstate*
 infrastructure/**/.terraform/
+
+/src/generated/prisma

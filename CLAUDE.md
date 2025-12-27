@@ -84,9 +84,11 @@ Tipos de margen:
 |--------|-----|
 | 3000 | Ocupado (otro proyecto frontend) |
 | 5000 | Ocupado (otro proyecto backend) |
+| 5432 | Ocupado (cobranza-postgres) |
+| 6379 | Ocupado (cobranza-redis) |
 | **3001** | **Este proyecto (Next.js)** |
-| 5432 | PostgreSQL |
-| 6379 | Redis |
+| **5433** | **PostgreSQL (ecommerceg-db)** |
+| **6380** | **Redis (ecommerceg-cache)** |
 | 7700 | Meilisearch |
 
 ## Stack Tecnológico (DEFINIDO)
@@ -96,7 +98,7 @@ Tipos de margen:
 |------------|------------|
 | Framework | Next.js 16 (App Router) |
 | Lenguaje | TypeScript 5.x |
-| ORM | Prisma 5.x |
+| ORM | Prisma 7.x |
 | Base de datos | PostgreSQL 16 |
 | Cache | Redis 7.x |
 
@@ -190,13 +192,17 @@ npm run type-check          # Verificar tipos TypeScript
 npm run validate            # lint + type-check + build
 
 # Base de datos
-npx prisma generate         # Generar cliente Prisma
-npx prisma migrate dev      # Migración desarrollo
-npx prisma studio           # UI de base de datos
+npm run db:generate         # Generar cliente Prisma
+npm run db:migrate          # Migración desarrollo
+npm run db:push             # Push schema sin migración
+npm run db:seed             # Ejecutar seed
+npm run db:studio           # UI de base de datos
+npm run db:reset            # Reset DB (dev only)
 
-# Docker
-docker-compose up -d        # Iniciar servicios locales
-docker-compose down         # Detener servicios
+# Docker (usar v2 syntax)
+docker compose up -d        # Iniciar servicios locales
+docker compose down         # Detener servicios
+docker compose ps           # Ver estado
 
 # Git
 git push origin main        # Push a GitHub
@@ -267,14 +273,16 @@ Ver "Estado Actual del Proyecto" más abajo
 - [x] GitHub templates creados
 - [x] **Milestone 0.1: Scaffolding del Proyecto** ✅
 - [x] **Milestone 0.2: Design System y UI Base** ✅
+- [x] **Milestone 0.3: Base de Datos y Prisma** ✅
+- [x] **Milestone 0.4: Autenticación** ✅
 
 ## Milestone Actual
-**0.3: Base de Datos y Prisma** - PENDIENTE
+**0.5: Multi-Tenancy** - PENDIENTE
 
 ## Próximos Pasos
-1. Ejecutar Milestone 0.3 (Base de Datos - Prisma)
-2. Ejecutar Milestone 0.4 (Autenticación - NextAuth)
-3. Ejecutar Milestone 0.5 (Multi-Tenancy)
+1. Ejecutar Milestone 0.5 (Multi-Tenancy - resolución por dominio)
+2. Ejecutar Milestone 0.6 (Docker y Ambiente Local completo)
+3. Ejecutar Milestone 0.7 (CI/CD Pipeline)
 
 ## Repositorio
 - **GitHub**: git@github.com:falvizoc/ecommerceg.git
@@ -288,8 +296,8 @@ Ver "Estado Actual del Proyecto" más abajo
 
 ## Última Actualización
 - **Fecha**: 2025-12-26
-- **Sesión**: Milestone 0.2 completado (Design System)
-- **Próxima acción**: Iniciar Milestone 0.3 (Prisma + PostgreSQL)
+- **Sesión**: Milestone 0.4 completado (Autenticación)
+- **Próxima acción**: Iniciar Milestone 0.5 (Multi-Tenancy)
 
 ---
 

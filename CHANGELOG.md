@@ -32,6 +32,26 @@ y este proyecto adhiere a [Versionado Semántico](https://semver.org/lang/es/).
   - Landing page responsive demostrando componentes
   - Toaster (sonner) para notificaciones
   - Lucide React para iconografía
+- **Milestone 0.3: Base de Datos y Prisma**
+  - Prisma 7 configurado con PostgreSQL
+  - Schema multi-tenant completo con todos los modelos:
+    - Tenant, TenantPricing, CategoryMargin, ProductMargin
+    - User, Account, Session, VerificationToken (NextAuth.js compatible)
+    - Customer, Address
+    - Order, OrderItem, Payment, Invoice
+  - Enums: UserRole, MarginType, PriceField, OrderStatus, PaymentStatus, etc.
+  - docker-compose.yml con PostgreSQL, Redis y Meilisearch
+  - Prisma Client singleton para Next.js
+  - Seed script con datos de prueba (tenants, admins, customer)
+- **Milestone 0.4: Autenticación**
+  - NextAuth.js v5 (beta) configurado con Credentials provider
+  - Páginas de login y registro con validación
+  - API de registro con hash bcrypt
+  - Middleware de protección de rutas
+  - SessionProvider para cliente
+  - Hook useSession personalizado con tipos
+  - Header con menú de usuario autenticado
+  - Roles: SUPER_ADMIN, ADMIN, USER
 
 ### Changed
 - N/A
@@ -43,7 +63,7 @@ y este proyecto adhiere a [Versionado Semántico](https://semver.org/lang/es/).
 - N/A
 
 ### Fixed
-- N/A
+- Login de tenant admins fallaba por filtrado incorrecto de tenantId (session 2025-12-26)
 
 ### Security
 - N/A

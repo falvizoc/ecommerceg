@@ -1,0 +1,86 @@
+# =============================================================================
+# eCommerce-G - Docker Compose
+# Development environment with PostgreSQL, Redis, and Meilisearch
+# =============================================================================
+
+services:
+  # ---------------------------------------------------------------------------
+  # PostgreSQL Database
+  # ---------------------------------------------------------------------------
+  db:
+    image: postgres:16-alpine
+    container_name: ecommerceg-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-ecommerceg}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-ecommerceg_dev_2024}
+      POSTGRES_DB: ${POSTGRES_DB:-ecommerceg}
+    ports:
+      - "5433:5432"  # External 5433 to avoid conflict with cobranza
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-ecommerceg} -d ${POSTGRES_DB:-ecommerceg}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # ---------------------------------------------------------------------------
+  # Redis Cache
+  # ---------------------------------------------------------------------------
+  cache:
+    image: redis:7-alpine
+    container_name: ecommerceg-cache
+    restart: unless-stopped
+    ports:
+      - "6380:6379"  # External 6380 to avoid conflict with cobranza
+    volumes:
+      - redis_data:/data
+    command: redis-server --appendonly yes
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # ---------------------------------------------------------------------------
+  # Meilisearch (Full-text search)
+  # ---------------------------------------------------------------------------
+  search:
+    image: getmeili/meilisearch:v1.6
+    container_name: ecommerceg-search
+    restart: unless-stopped
+    environment:
+      MEILI_MASTER_KEY: ${MEILI_MASTER_KEY:-meilisearch_dev_key_2024}
+      MEILI_ENV: development
+    ports:
+      - "7700:7700"
+    volumes:
+      - meilisearch_data:/meili_data
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:7700/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  postgres_data:
+    name: ecommerceg_postgres_data
+  redis_data:
+    name: ecommerceg_redis_data
+  meilisearch_data:
+    name: ecommerceg_meilisearch_data
+
+# =============================================================================
+# Usage:
+#   Start all services:     docker-compose up -d
+#   Stop all services:      docker-compose down
+#   View logs:              docker-compose logs -f
+#   Reset data:             docker-compose down -v
+#
+# Connection strings (for .env):
+#   DATABASE_URL="postgresql://ecommerceg:ecommerceg_dev_2024@localhost:5433/ecommerceg"
+#   REDIS_URL="redis://localhost:6380"
+#   MEILISEARCH_URL="http://localhost:7700"
+#   MEILISEARCH_KEY="meilisearch_dev_key_2024"
+# =============================================================================
